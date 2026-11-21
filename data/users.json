@@ -1,0 +1,23 @@
+{
+  "authParams": {
+    "algorithm": "PBKDF2-HMAC-SHA256",
+    "iterations": 310000,
+    "hashLength": 32,
+    "pepper": "UDMFieldExplorer-Pepper-v1-CHANGE-ME",
+    "note": "This is a STATIC site with no server. The pepper here is not a true server-side secret. Real write-protection comes from the GitHub token required to save changes. Password hashing protects these stored credentials from trivial reuse if the repo is read."
+  },
+  "roles": {
+    "admin": { "canRead": true, "canEditFields": true, "canManageUsers": true },
+    "editor": { "canRead": true, "canEditFields": true, "canManageUsers": false },
+    "viewer": { "canRead": true, "canEditFields": false, "canManageUsers": false }
+  },
+  "users": [
+    {
+      "username": "admin",
+      "role": "admin",
+      "salt": "axVU+RziDlpKYZ81oklV8A==",
+      "hash": "bC7YhXhNDWbdrDSrJdBM3nQIgaBkex2pMcUjITuA8wk=",
+      "createdAt": "2026-11-21"
+    }
+  ]
+}

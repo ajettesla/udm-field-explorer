@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UDM Field Explorer — Google SecOps</title>
+  <meta name="description" content="Browse and search Google SecOps UDM event and entity fields, and copy parser paths (event.idm.read_only_udm.* / event.idm.graph.*) for CBN parser development.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <a class="wordmark" href="./" aria-label="UDM Field Explorer home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="7" class="mark-bg"/>
+        <circle cx="9" cy="16" r="2.6" class="mark-node"/>
+        <circle cx="22" cy="8.5" r="2.6" class="mark-node"/>
+        <circle cx="22" cy="16" r="2.6" class="mark-node"/>
+        <circle cx="22" cy="23.5" r="2.6" class="mark-node"/>
+        <path d="M11.5 16h4 M15.5 16v-7.5h4 M15.5 16h4 M15.5 16v7.5h4" class="mark-edge"/>
+      </svg>
+      <span class="wordmark-path"><span class="wm-dim">udm</span><span class="wm-dot">.</span><span class="wm-strong">field_explorer</span></span>
+    </a>
+    <span class="header-tag">Google SecOps</span>
+    <nav class="header-nav">
+      <a href="#/admin" class="nav-link" id="admin-link">Admin</a>
+    </nav>
+    <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch theme">◐</button>
+  </header>
+
+  <div class="tabbar" role="tablist" aria-label="UDM dataset">
+    <button id="tab-event" class="ds-tab" type="button" role="tab" aria-pressed="true">Events</button>
+    <button id="tab-entity" class="ds-tab" type="button" role="tab" aria-pressed="false" disabled title="Loading graph data…">Graph</button>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5 18 18"/></svg>
+      <input id="search" type="search" placeholder="Search fields, paths, kinds (hash, ip…), or /regex/…"
+             autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search UDM fields">
+      <kbd class="search-kbd" aria-hidden="true">Ctrl K</kbd>
+    </div>
+    <div class="scope-toggles" role="group" aria-label="Search scope">
+      <button id="scope-field" class="scope-pill" type="button" aria-pressed="true" title="Match field names, paths, kinds, aliases, descriptions">Field</button>
+      <button id="scope-value" class="scope-pill" type="button" aria-pressed="true" title="Match example values, e.g. searching "docx" finds file_type">Value</button>
+    </div>
+    <div class="toolbar-actions">
+      <button id="expand-all" class="tool-btn" type="button">Expand all</button>
+      <button id="collapse-all" class="tool-btn" type="button">Collapse all</button>
+      <button id="common-toggle" class="tool-btn" type="button" aria-pressed="false">★ Common</button>
+    </div>
+  </div>
+
+  <main class="layout">
+    <aside class="panel left-panel" aria-label="UDM fields">
+      <div id="banner" class="banner" hidden></div>
+      <nav id="tree" class="tree" aria-label="UDM field tree"></nav>
+      <div id="results" class="results" hidden></div>
+      <div id="common" class="results" hidden></div>
+    </aside>
+
+    <div id="resizer" class="resizer" role="separator" aria-orientation="vertical"
+         aria-label="Resize panels" tabindex="0"></div>
+
+    <section id="details" class="panel details-panel" aria-label="Field details" aria-live="polite">
+      <div class="welcome">
+        <p class="welcome-lead">Select a field from the tree, or press <kbd>Ctrl</kbd> <kbd>K</kbd> to search.</p>
+        <p class="welcome-sub">Click any field to see its type, description, and ready-to-copy parser path
+          (<code>event.idm.read_only_udm.…</code>).</p>
+        <ul class="welcome-tips">
+          <li><kbd>↑</kbd> <kbd>↓</kbd> move through search results, <kbd>Enter</kbd> opens one</li>
+          <li><kbd>Esc</kbd> clears the search</li>
+          <li><code class="badge-demo">string[]</code> means the field is repeated (accepts multiple values)</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span id="footer-meta">Loading schema…</span>
+    <a href="https://docs.cloud.google.com/chronicle/docs/reference/udm-field-list" target="_blank" rel="noopener">Official UDM field dictionary ↗</a>
+    <a href="https://github.com/chronicle/detection-rules" target="_blank" rel="noopener">chronicle/detection-rules ↗</a>
+    <a href="https://github.com/ajettesla/detection-rules" target="_blank" rel="noopener">detection-rules repo ↗</a>
+  </footer>
+
+  <noscript><p class="banner" style="display:block">This tool needs JavaScript to load <code>data/udm.json</code>.</p></noscript>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

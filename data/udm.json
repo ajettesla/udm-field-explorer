@@ -1,0 +1,70 @@
+{
+  "_schema_version": "1.0",
+  "_udm_version": "2026-08",
+  "_updated": "2026-11-21",
+  "metadata": {
+    "_type": "object",
+    "_category": "Metadata",
+    "_description": "Basic description of the event.",
+    "id": { "_type": "bytes", "_description": "Unique ID of the UDM event.", "_kind": "identifier" },
+    "event_type": { "_type": "enum", "_description": "The UDM event type.", "_examples": ["USER_LOGIN", "PROCESS_LAUNCH", "NETWORK_CONNECTION"] },
+    "event_timestamp": { "_type": "timestamp", "_description": "GMT timestamp when the event was generated." },
+    "vendor_name": { "_type": "string", "_description": "Vendor of the product.", "_examples": ["Microsoft", "CrowdStrike"] },
+    "product_name": { "_type": "string", "_description": "Product that generated the event." }
+  },
+  "principal": {
+    "_type": "object",
+    "_category": "Identity",
+    "_description": "The acting entity.",
+    "ip": { "_type": "string", "_repeated": true, "_description": "IP address(es) of the principal.", "_kind": "ip", "_examples": ["203.0.113.42"] },
+    "hostname": { "_type": "string", "_description": "Hostname of the principal device.", "_kind": "hostname", "_examples": ["WIN-DC01.corp.example.com"] },
+    "user": {
+      "_type": "object",
+      "_description": "The user acting as the principal.",
+      "userid": { "_type": "string", "_description": "Unique user identifier.", "_kind": "identifier" },
+      "user_display_name": { "_type": "string", "_description": "Display name of the user." },
+      "email_addresses": { "_type": "string", "_repeated": true, "_kind": "email" }
+    },
+    "process": {
+      "_type": "object",
+      "_category": "Process",
+      "_description": "The process acting as the principal.",
+      "pid": { "_type": "string", "_description": "Process ID.", "_kind": "identifier" },
+      "command_line": { "_type": "string", "_description": "Full command line." },
+      "file": {
+        "_type": "object",
+        "_category": "File",
+        "_description": "The executable file backing the process.",
+        "full_path": { "_type": "string", "_description": "Full path of the file." },
+        "sha256": { "_type": "string", "_description": "SHA-256 hash.", "_kind": "hash" }
+      }
+    }
+  },
+  "target": {
+    "_type": "object",
+    "_category": "Identity",
+    "_description": "The entity the activity is directed at.",
+    "ip": { "_type": "string", "_repeated": true, "_kind": "ip" },
+    "hostname": { "_type": "string", "_kind": "hostname" },
+    "user": {
+      "_type": "object",
+      "_description": "The user being acted upon.",
+      "userid": { "_type": "string", "_kind": "identifier" },
+      "user_display_name": { "_type": "string" }
+    },
+    "process": {
+      "_type": "object",
+      "_category": "Process",
+      "_description": "The process being acted upon.",
+      "pid": { "_type": "string", "_kind": "identifier" },
+      "command_line": { "_type": "string" }
+    },
+    "file": {
+      "_type": "object",
+      "_category": "File",
+      "_description": "The file being acted upon.",
+      "full_path": { "_type": "string" },
+      "sha256": { "_type": "string", "_kind": "hash" }
+    }
+  }
+}

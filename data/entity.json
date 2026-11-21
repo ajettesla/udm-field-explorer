@@ -1,0 +1,88 @@
+{
+  "_schema_version": "1.0",
+  "_udm_version": "2026-08 (starter subset)",
+  "_updated": "2026-11-21",
+  "entity": {
+    "_type": "object",
+    "_repeated": true,
+    "_category": "Graph",
+    "_description": "A single entity record (user, asset, file, domain, group, etc.).",
+    "metadata": {
+      "_type": "object",
+      "_description": "Metadata about this entity record.",
+      "entity_type": { "_type": "enum", "_description": "Type of entity. Values: USER, ASSET, FILE, DOMAIN, GROUP, IP_ADDRESS, RESOURCE, CLOUD_RESOURCE.", "_examples": ["USER", "ASSET", "FILE", "DOMAIN"] },
+      "source_type": { "_type": "enum", "_description": "Source of this entity record. Values: ENRICHMENT, DETECTION, MANUAL, BASELINE.", "_examples": ["ENRICHMENT", "DETECTION"] },
+      "product_name": { "_type": "string", "_description": "Product that produced this entity record.", "_examples": ["Google SecOps", "CrowdStrike", "Microsoft Defender"] },
+      "ingested_timestamp": { "_type": "timestamp", "_description": "When this entity record was ingested.", "seconds": { "_type": "int64" }, "nanos": { "_type": "int32" } }
+    },
+    "user": {
+      "_type": "object",
+      "_description": "User entity details.",
+      "userid": { "_type": "string", "_description": "Unique user identifier.", "_kind": "identifier" },
+      "user_display_name": { "_type": "string", "_description": "Display name." },
+      "email_addresses": { "_type": "string", "_repeated": true, "_kind": "email" },
+      "windows_sid": { "_type": "string", "_description": "Windows SID." },
+      "title": { "_type": "string" },
+      "department": { "_type": "string", "_repeated": true },
+      "employee_id": { "_type": "string", "_kind": "identifier" },
+      "termination_date": { "_type": "timestamp" },
+      "group_identifiers": { "_type": "string", "_repeated": true, "_kind": "identifier" },
+      "managers": { "_type": "object", "_repeated": true, "email_addresses": { "_type": "string", "_repeated": true, "_kind": "email" } },
+      "attribute": { "_type": "object", "labels": { "_type": "object", "_repeated": true, "key": { "_type": "string" }, "value": { "_type": "string" } } }
+    },
+    "asset": {
+      "_type": "object",
+      "_description": "Asset (device) entity details.",
+      "asset_id": { "_type": "string", "_description": "Vendor-specific device ID.", "_kind": "identifier" },
+      "hostname": { "_type": "string", "_kind": "hostname" },
+      "ip": { "_type": "string", "_repeated": true, "_kind": "ip" },
+      "mac": { "_type": "string", "_repeated": true, "_kind": "mac" },
+      "location": { "_type": "object", "city": { "_type": "string", "_kind": "geo" }, "state": { "_type": "string", "_kind": "geo" }, "country_or_region": { "_type": "string", "_kind": "geo" }, "name": { "_type": "string" } },
+      "labels": { "_type": "object", "_repeated": true, "key": { "_type": "string" }, "value": { "_type": "string" } }
+    },
+    "file": {
+      "_type": "object",
+      "_description": "File entity details.",
+      "full_path": { "_type": "string", "_description": "Full path of the file." },
+      "sha256": { "_type": "string", "_kind": "hash" },
+      "md5": { "_type": "string", "_kind": "hash" },
+      "size": { "_type": "uint64" },
+      "file_type": { "_type": "enum" },
+      "tags": { "_type": "string", "_repeated": true },
+      "pe_file": { "_type": "object", "imphash": { "_type": "string", "_kind": "hash" } }
+    },
+    "domain": {
+      "_type": "object",
+      "_description": "Domain entity details.",
+      "name": { "_type": "string", "_description": "Domain name." },
+      "registrar": { "_type": "string" },
+      "creation_date": { "_type": "timestamp" },
+      "expiration_date": { "_type": "timestamp" }
+    },
+    "group": {
+      "_type": "object",
+      "_description": "Group entity details.",
+      "group_display_name": { "_type": "string" },
+      "windows_sid": { "_type": "string" },
+      "email_addresses": { "_type": "string", "_repeated": true, "_kind": "email" },
+      "members": { "_type": "string", "_repeated": true, "_kind": "identifier" }
+    },
+    "ip_address": {
+      "_type": "object",
+      "_description": "IP address entity details.",
+      "ip": { "_type": "string", "_kind": "ip" },
+      "asn": { "_type": "string" },
+      "carrier_name": { "_type": "string" },
+      "organization_name": { "_type": "string" }
+    },
+    "resource": {
+      "_type": "object",
+      "_description": "Cloud resource entity details.",
+      "name": { "_type": "string" },
+      "resource_type": { "_type": "string" },
+      "product_object_id": { "_type": "string", "_kind": "identifier" },
+      "attribute": { "_type": "object", "labels": { "_type": "object", "_repeated": true, "key": { "_type": "string" }, "value": { "_type": "string" } }, "roles": { "_type": "object", "_repeated": true, "name": { "_type": "string" } } },
+      "resource_ancestors": { "_type": "object", "_repeated": true, "product_object_id": { "_type": "string", "_kind": "identifier" }, "attribute": { "_type": "object", "labels": { "_type": "object", "_repeated": true, "key": { "_type": "string" }, "value": { "_type": "string" } } } }
+    }
+  }
+}
